@@ -106,23 +106,3 @@ jobs:
             echo "Health check failed"
             exit 1
           fi
-
-    - name: Send Slack Notification
-      if: always()
-      uses: slackapi/slack-github-action@v1
-      with:
-        payload: |
-          {
-            "text": "Deployment Status: ${{ job.status }}",
-            "blocks": [
-              {
-                "type": "section",
-                "text": {
-                  "type": "mrkdwn",
-                  "text": "*Deployment to EC2*\nStatus: ${{ job.status }}\nCommit: ${{ github.sha }}\nBranch: ${{ github.ref }}"
-                }
-              }
-            ]
-          }
-      env:
-        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
